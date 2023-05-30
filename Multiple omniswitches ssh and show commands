@@ -1,0 +1,25 @@
+from netmiko import ConnectHandler
+
+i = open("ips_cliente.txt", "r")
+while(True):
+    lin = i.readline()
+    if not lin:
+        break
+    device = {
+                    'device_type': 'alcatel_sros',
+                    'ip': lin,
+                    'username': 'admin',
+                    'password': 'Alcatel1234',
+                }
+
+    net_connect = ConnectHandler(**device)
+    f = open("show_commands.txt", "r")
+    while(True):
+        linea = f.readline()
+        output = net_connect.send_command(linea)
+        print(output)
+        if not linea:
+            break
+    f.close()
+i.close()
+
